@@ -258,10 +258,10 @@ nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
 
 "强迫自己用 hjkl
-map <Left> <Nop>
-map <Right> <Nop>
-map <Up> <Nop>
-map <Down> <Nop>
+"map <Left> <Nop>
+"map <Right> <Nop>
+"map <Up> <Nop>
+"map <Down> <Nop>
 
 "Treat long lines as break lines (useful when moving around in them)
 "se swap之后，同物理行上线直接跳
@@ -347,8 +347,8 @@ nnoremap <silent> # #zz
 nnoremap <silent> g* g*zz
 
 "Use arrow key to change buffer"
-noremap <left> :bp<CR>
-noremap <right> :bn<CR>
+"noremap <left> :bp<CR>
+"noremap <right> :bn<CR>
 
 ""Jump to start and end of line using the home row keys
 ""
@@ -758,3 +758,18 @@ endfunc
 
 " F10 to run python script
 nnoremap <buffer> <F10> :exec '!python' shellescape(@%, 1)<cr>
+
+" mac中文输入法的问题
+" http://zh.undozen.com/2013/14
+"set noimdisable
+"autocmd! InsertLeave * set imdisable|set iminsert=0
+"autocmd! InsertEnter * set noimdisable|set iminsert=0
+
+"se imd 
+"au InsertEnter * se noimd 
+"au InsertLeave * se imd 
+"au FocusGained * se imd
+
+set noimd
+set imi=2
+set ims=2
