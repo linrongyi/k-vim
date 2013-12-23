@@ -258,10 +258,10 @@ nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
 
 "强迫自己用 hjkl
-map <Left> <Nop>
-map <Right> <Nop>
-map <Up> <Nop>
-map <Down> <Nop>
+"map <Left> <Nop>
+"map <Right> <Nop>
+"map <Up> <Nop>
+"map <Down> <Nop>
 
 "Treat long lines as break lines (useful when moving around in them)
 "se swap之后，同物理行上线直接跳
@@ -347,8 +347,8 @@ nnoremap <silent> # #zz
 nnoremap <silent> g* g*zz
 
 "Use arrow key to change buffer"
-noremap <left> :bp<CR>
-noremap <right> :bn<CR>
+"noremap <left> :bp<CR>
+"noremap <right> :bn<CR>
 
 ""Jump to start and end of line using the home row keys
 ""
