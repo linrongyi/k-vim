@@ -19,7 +19,7 @@
 " General 基础设置
 "==========================================
 
-"set guifont=Monaco:h20          " 字体 && 字号
+set guifont=Monaco:h20          " 字体 && 字号
 
 " history存储长度。
 set history=2000
@@ -57,7 +57,7 @@ set t_ti= t_te=
 
 
 "- 则点击光标不会换,用于复制
-set mouse-=a           " 鼠标暂不启用, 键盘党....
+"set mouse-=a           " 鼠标暂不启用, 键盘党....
 " 修复ctrl+m 多光标操作选择的bug，但是改变了ctrl+v进行字符选中时将包含光标下的字符
 "set selection=exclusive
 set selection=inclusive
@@ -207,7 +207,7 @@ set completeopt=longest,menu
 "离开插入模式后自动关闭预览窗口
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 "回车即选中当前项
-inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"
+"inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"
 
 "上下左右键的行为 会显示其他信息
 inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
@@ -317,7 +317,7 @@ nnoremap <F6> :exec exists('syntax_on') ? 'syn off' : 'syn on'<CR>
 
 
 " Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
-map <space> /
+"map <space> /
 "map <c-space> ?"
 
 map Y y$
@@ -379,7 +379,6 @@ nnoremap ` '
 nnoremap U <C-r>
 
 "au VimResized * exe "normal! \<c-w>=""
-
 " select all
 map <Leader>sa ggVG"
 
@@ -387,9 +386,9 @@ map <Leader>sa ggVG"
 au BufWritePost .vimrc so ~/.vimrc
 
 " Close the current buffer
-"map <leader>bd :Bclose<cr>
+map <leader>bd :Bclose<cr>
 "" " Close all the buffers
-"map <leader>ba :1,1000 bd!<cr>
+map <leader>ba :1,1000 bd!<cr>
 
 map <leader>tn :tabnew<cr>
 map <leader>to :tabonly<cr>
@@ -427,29 +426,35 @@ Bundle 'gmarik/vundle'
 "################### 导航 ###################"
 "目录导航
 Bundle 'scrooloose/nerdtree'
-map <leader>n :NERDTreeToggle<CR>
+map <leader>n :NERDTreeCWD<CR>
+"map <leader>c :NERDTreeClose<CR>
 let NERDTreeHighlightCursorline=1
 let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.svn$', '^\.hg$' ]
 let g:netrw_home='~/bak'
 "close vim if the only window left open is a NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | end
 
-"for minibufferexpl
-Bundle 'fholgado/minibufexpl.vim'
-let g:miniBufExplMapWindowNavVim = 1
-let g:miniBufExplMapWindowNavArrows = 1
-let g:miniBufExplMapCTabSwitchBufs = 1
-let g:miniBufExplModSelTarget = 1
-"解决FileExplorer窗口变小问题
-let g:miniBufExplForceSyntaxEnable = 1
-let g:miniBufExplorerMoreThanOne=2
-let g:miniBufExplCycleArround=1
+" configure Vim so that it sets the working directory to the current file's directory
+autocmd BufEnter * lcd %:p:h
 
-" 默认方向键左右可以切换buffer
-nnoremap <TAB> :MBEbn<CR>
-noremap <leader>bn :MBEbn<CR>
-noremap <leader>bp :MBEbp<CR>
-noremap <leader>bd :MBEbd<CR>
+
+""不喜欢minibuff
+""for minibufferexpl
+"Bundle 'fholgado/minibufexpl.vim'
+"let g:miniBufExplMapWindowNavVim = 1
+"let g:miniBufExplMapWindowNavArrows = 1
+"let g:miniBufExplMapCTabSwitchBufs = 1
+"let g:miniBufExplModSelTarget = 1
+""解决FileExplorer窗口变小问题
+"let g:miniBufExplForceSyntaxEnable = 1
+"let g:miniBufExplorerMoreThanOne=2
+"let g:miniBufExplCycleArround=1
+
+"" 默认方向键左右可以切换buffer
+"" nnoremap <TAB> :MBEbn<CR>
+"noremap <leader>bn :MBEbn<CR>
+"noremap <leader>bp :MBEbp<CR>
+"noremap <leader>bd :MBEbd<CR>
 
 "标签导航
 Bundle 'majutsushi/tagbar'
@@ -502,13 +507,19 @@ let g:ctrlp_match_window_reversed=0
 let g:ctrlp_mruf_max=500
 let g:ctrlp_follow_symlinks=1
 
+" 新文件在tab中打开
+"let g:ctrlp_prompt_mappings = {
+    "\ 'AcceptSelection("e")': ['<c-cr>'],
+    "\ 'AcceptSelection("t")': ['<cr>', '<2-LeftMouse>'],
+    "\ }
+
 "################### 显示增强 ###################"
 
 "状态栏增强展示
 Bundle 'Lokaltog/vim-powerline'
 "if want to use fancy,need to add font patch -> git clone git://gist.github.com/1630581.git ~/.fonts/ttf-dejavu-powerline
 "let g:Powerline_symbols = 'fancy'
-let g:Powerline_symbols = 'unicode'
+"let g:Powerline_symbols = 'unicode'
 
 
 "括号显示增强
@@ -568,9 +579,9 @@ Bundle 'vim-scripts/matchit.zip'
 "迄今为止用到的最好的自动VIM自动补全插件
 Bundle 'Valloric/YouCompleteMe'
 "youcompleteme  默认tab  s-tab 和自动补全冲突
-"let g:ycm_key_list_select_completion=['<c-n>']
+let g:ycm_key_list_select_completion=['<c-n>']
 let g:ycm_key_list_select_completion = ['<Down>']
-"let g:ycm_key_list_previous_completion=['<c-p>']
+let g:ycm_key_list_previous_completion=['<c-p>']
 let g:ycm_key_list_previous_completion = ['<Up>']
 
 
@@ -604,22 +615,24 @@ let g:closetag_html_style=1
 Bundle 'godlygeek/tabular'
 nmap <Leader>a= :Tabularize /=<CR>
 vmap <Leader>a= :Tabularize /=<CR>
+nmap <Leader>a :Tabularize /
+vmap <Leader>a :Tabularize /
 nmap <Leader>a: :Tabularize /:\zs<CR>
 vmap <Leader>a: :Tabularize /:\zs<CR>
 
-"for visual selection
-Bundle 'terryma/vim-expand-region'
-map = <Plug>(expand_region_expand)
-map - <Plug>(expand_region_shrink)
+"for visual selection(这玩意儿不知道干嘛的)
+"Bundle 'terryma/vim-expand-region'
+"map = <Plug>(expand_region_expand)
+"map - <Plug>(expand_region_shrink)
 
 "for mutil cursor
-Bundle 'terryma/vim-multiple-cursors'
-let g:multi_cursor_use_default_mapping=0
-" Default mapping
-let g:multi_cursor_next_key='<C-m>'
-let g:multi_cursor_prev_key='<C-p>'
-let g:multi_cursor_skip_key='<C-x>'
-let g:multi_cursor_quit_key='<Esc>'
+"Bundle 'terryma/vim-multiple-cursors'
+"let g:multi_cursor_use_default_mapping=0
+"" Default mapping
+"let g:multi_cursor_next_key='<C-m>'
+"let g:multi_cursor_prev_key='<C-p>'
+"let g:multi_cursor_skip_key='<C-x>'
+"let g:multi_cursor_quit_key='<Esc>'
 
 
 "################# 语法检查 ###############
@@ -696,7 +709,7 @@ syntax on
 
 " Set extra options when running in GUI mode
 if has("gui_running")
-    set guifont=Monaco:h14
+    set guifont=Monaco:h13
     set guioptions-=T
     set guioptions+=e
     set guioptions-=r
@@ -738,23 +751,52 @@ au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
 
 ""定义函数SetTitle，自动插入文件头 尅自定义文件头信息
-autocmd BufNewFile *.sh,*.py exec ":call SetTitle()"
-func SetTitle()
-    "如果文件类型为.sh文件
-    if &filetype == 'sh'
-        call setline(1, "\#!/bin/bash")
-    endif
+"autocmd BufNewFile *.sh,*.py exec ":call SetTitle()"
+"func SetTitle()
+    ""如果文件类型为.sh文件
+    "if &filetype == 'sh'
+        "call setline(1, "\#!/bin/bash")
+    "endif
 
-    if &filetype == 'python'
-        call setline(1, "\#!/usr/bin/env python")
-        call append(1, "\# encoding: utf-8")
-    endif
+    "if &filetype == 'python'
+        "call setline(1, "\#!/usr/bin/env python")
+        "call append(1, "\# encoding: utf-8")
+    "endif
+    "
 
-    normal G
-    normal o
-    normal o
-endfunc
+    "normal G
+    "normal o
+    "normal o
+"endfunc
 
 
 " F10 to run python script
 nnoremap <buffer> <F10> :exec '!python' shellescape(@%, 1)<cr>
+
+" 中文输入法的一些配置
+set noimdisable
+autocmd! InsertLeave * set imdisable|set iminsert=0
+autocmd! InsertEnter * set noimdisable|set iminsert=0
+
+" vim-pandoc
+Bundle 'vim-pandoc/vim-pandoc'
+
+" 用pandoc预览markdown文件
+function! PandocMarkdownPreview()
+  silent exec 'cd %:p:h'
+  silent exec 'pwd'
+  silent exec '!pandoc -s --mathjax -o preview.html %'
+  if has("win32")
+    silent exec '!start cmd /c preview.html'
+  else
+    silent exec '!open preview.html'
+  endif
+endfunction
+
+map <leader>mp :call PandocMarkdownPreview()<cr>
+
+
+" 在新的tab下打开文件, 而不是在讨厌的buffer中, 
+" [TODO]需要判断在是否在gui模式下
+"autocmd VimEnter * tab all
+"autocmd BufAdd * exe 'tablast | tabe "' . expand( "<afile") .'"'
