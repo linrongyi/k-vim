@@ -722,11 +722,11 @@ if has("gui_running")
 endif
 
 " 修改主题和颜色展示
-colorscheme solarized
-set background=dark
+"colorscheme solarized
+set background=light
 set t_Co=256
 
-"colorscheme molokai
+colorscheme molokai
 "colorscheme desert
 
 "设置标记一列的背景颜色和数字一行颜色一致
@@ -800,3 +800,10 @@ map <leader>mp :call PandocMarkdownPreview()<cr>
 " [TODO]需要判断在是否在gui模式下
 "autocmd VimEnter * tab all
 "autocmd BufAdd * exe 'tablast | tabe "' . expand( "<afile") .'"'
+
+" Supertab
+Bundle 'ervandew/supertab'
+
+
+
+
