@@ -18,6 +18,7 @@
 "==========================================
 " General 基础设置
 "==========================================
+set clipboard=unnamed    " 使用剪切板
 
 set guifont=Monaco:h20          " 字体 && 字号
 
@@ -489,6 +490,52 @@ let Tlist_Use_Horiz_Window = 0
 let Tlist_Use_Right_Window = 0
 let Tlist_WinWidth = 25
 
+" ctag的一些配置 C++; Added by linrongyi
+map <F5> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR><CR> :TlistUpdate<CR>
+imap <F5> <ESC>:!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR><CR> :TlistUpdate<CR>
+set tags=~/svn/tags
+
+" Cscope configs
+if has('cscope')
+    set cscopetag 
+    set cscopeverbose
+
+    if has('quickfix')
+        set cscopequickfix=s-,c-,d-,i-,t-,e-
+    endif
+    
+    nmap <leader>gs :cs find s <C-R>=expand("<cword>")<CR><CR>
+    nmap <leader>gg :cs find g <C-R>=expand("<cword>")<CR><CR>
+    nmap <leader><CR> :cs find g <C-R>=expand("<cword>")<CR><CR>
+    nmap <leader>gc :cs find c <C-R>=expand("<cword>")<CR><CR>
+    nmap <leader>gt :cs find t <C-R>=expand("<cword>")<CR><CR>
+    nmap <leader>ge :cs find e <C-R>=expand("<cword>")<CR><CR>
+    nmap <leader>gf :cs find f <C-R>=expand("<cfile>")<CR><CR>
+    nmap <leader>gi :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+    nmap <leader>gd :cs find d <C-R>=expand("<cword>")<CR><CR> 
+   
+    nmap <leader><BS> <C-O>
+    
+    nmap <leader>ms :scs find s <C-R>=expand("<cword>")<CR><CR>
+    nmap <leader>mg :scs find g <C-R>=expand("<cword>")<CR><CR>
+    nmap <leader>mc :scs find c <C-R>=expand("<cword>")<CR><CR>
+    nmap <leader>mt :scs find t <C-R>=expand("<cword>")<CR><CR>
+    nmap <leader>me :scs find e <C-R>=expand("<cword>")<CR><CR>
+    nmap <leader>mf :scs find f <C-R>=expand("<cfile>")<CR><CR>
+    nmap <leader>mi :scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+    nmap <leader>md :scs find d <C-R>=expand("<cword>")<CR><CR> 
+   
+    "if filereadable("~/svn/cscope.out")
+    "cs add ~/svn/cscope.out ~/svn/
+    "cs add ~/svn-local/ms-parser/cscope.out ~/svn-local/ms-parser/
+    "endif
+
+endif
+
+Bundle "rking/ag.vim"
+let g:agprg="ag --column"
+nmap <leader>/ :Ag -t  
+
 "for file search ctrlp, 文件搜索
 Bundle 'kien/ctrlp.vim'
 let g:ctrlp_map = '<leader>p'
@@ -507,7 +554,7 @@ let g:ctrlp_match_window_reversed=0
 let g:ctrlp_mruf_max=500
 let g:ctrlp_follow_symlinks=1
 
-" 新文件在tab中打开
+" 新文件在tab中打开, 还是有一些问题, 所以放弃了
 "let g:ctrlp_prompt_mappings = {
     "\ 'AcceptSelection("e")': ['<c-cr>'],
     "\ 'AcceptSelection("t")': ['<cr>', '<2-LeftMouse>'],
@@ -584,6 +631,7 @@ let g:ycm_key_list_select_completion = ['<Down>']
 let g:ycm_key_list_previous_completion=['<c-p>']
 let g:ycm_key_list_previous_completion = ['<Up>']
 
+nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 "快速插入代码片段
 "Bundle 'vim-scripts/UltiSnips'
@@ -796,13 +844,15 @@ endfunction
 map <leader>mp :call PandocMarkdownPreview()<cr>
 
 
-" 在新的tab下打开文件, 而不是在讨厌的buffer中, 
+" 在新的tab下打开文件, 而不是在讨厌的buffer中,
 " [TODO]需要判断在是否在gui模式下
 "autocmd VimEnter * tab all
 "autocmd BufAdd * exe 'tablast | tabe "' . expand( "<afile") .'"'
 
 " Supertab
 Bundle 'ervandew/supertab'
+let g:SuperTabDefaultCompletionType = "<c-n>"
+
 
 
 
